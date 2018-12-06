@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class Search extends Component {
   constructor() {
@@ -14,7 +15,14 @@ export default class Search extends Component {
 
   handleSubmit(e) {
     event.preventDefault();
-    console.log(this.state.value);
+    axios
+      .get(`/events?_page&q=${this.state.value}&_page`)
+      .then(res => {
+        this.setState({ data: res.data });
+      })
+      .catch(error => {
+        console.error('Error', error);
+      });
   }
 
   render() {
