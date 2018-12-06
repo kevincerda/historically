@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
+import ResultsItem from './ResultsItem.jsx';
 
 export default class Search extends Component {
   constructor() {
@@ -45,16 +46,25 @@ export default class Search extends Component {
 
   render() {
     return (
-      <div id="search">
-        <form>
-          <label>Search</label>
-          <input
-            type="text"
-            value={this.state.searchQueryValue}
-            onChange={this.handleChange}
-          />
-          <button onClick={this.handleSubmit}>Submit</button>
-        </form>
+      <div>
+        <div id="search-form">
+          <form>
+            <label>Search</label>
+            <input
+              type="text"
+              value={this.state.searchQueryValue}
+              onChange={this.handleChange}
+            />
+            <button onClick={this.handleSubmit}>Submit</button>
+          </form>
+        </div>
+        <div id="results">
+          {this.state.data
+            ? this.state.data.map((item, index) => {
+                return <ResultsItem item={item} key={index} />;
+              })
+            : null}
+        </div>
       </div>
     );
   }
