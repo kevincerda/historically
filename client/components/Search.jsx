@@ -7,7 +7,7 @@ export default class Search extends Component {
   constructor() {
     super();
     this.state = {
-      searchQueryValue: '',
+      searchQueryValue: [],
       page: 1,
       data: undefined,
       resultsCount: undefined,
@@ -70,11 +70,7 @@ export default class Search extends Component {
           </form>
         </div>
         <div id="results">
-          {this.state.data
-            ? this.state.data.map((item, index) => {
-                return <ResultsItem item={item} key={index} />;
-              })
-            : null}
+          {this.state.data ? <ResultsItem data={this.state.data} /> : null}
           {this.state.pageCount ? (
             <ReactPaginate
               previousLabel={'<'}
