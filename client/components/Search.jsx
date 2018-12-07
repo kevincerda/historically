@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 import ResultsItem from './ResultsItem.jsx';
-import parse from 'parse-link-header';
 
 export default class Search extends Component {
   constructor() {
