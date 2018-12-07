@@ -27,6 +27,9 @@ export default class Search extends Component {
       .get(`/events?q=${this.state.searchQueryValue}&_page=${this.state.page}`)
       .then(res => {
         this.updateData(res.data);
+      })
+      .catch(error => {
+        console.error('Error', error);
       });
   }
 
