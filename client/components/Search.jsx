@@ -6,14 +6,13 @@ export default class Search extends Component {
     super(props);
     this.state = {
       searchQueryValue: '',
-      page: 1,
-      resultsCount: undefined,
-      pageLinks: undefined,
-      pageCount: undefined
+      page: props.page,
+      resultsCount: props.resultsCount,
+      pageLinks: props.pageLinks,
+      pageCount: props.pageCount
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handlePageClick = this.handlePageClick.bind(this);
     this.updateData = this.props.updateData.bind(this);
   }
 
@@ -26,23 +25,22 @@ export default class Search extends Component {
     axios
       .get(`/events?q=${this.state.searchQueryValue}&_page=${this.state.page}`)
       .then(res => {
-        this.updateData(res.data);
+        this.setState({
+          data: res.data,
+          resultsCount: res.headers['x-total-count'],
+          pageCount: Math.ceil(res.headers['x-total-count'] / 10)
+        });
+      })
+      .then(() => {
+        this.updateData({
+          searchQueryValue: this.state.searchQueryValue,
+          searchResults: this.state.data,
+          resultsCount: this.state.resultsCount,
+          pageCount: this.state.pageCount
+        });
       })
       .catch(error => {
         console.error('Error', error);
-      });
-  }
-
-  handlePageClick(data) {
-    let page = data.selected + 1;
-    this.setState({ page: page });
-    axios
-      .get(`/events?q=${this.state.searchQueryValue}&_page=${this.state.page}`)
-      .then(res => {
-        this.setState({ data: res.data });
-      })
-      .catch(error => {
-        console.log('Error', error);
       });
   }
 
@@ -63,17 +61,3 @@ export default class Search extends Component {
     );
   }
 }
-
-// .then(res => {
-//   this.setState({
-//     resultsCount: res.headers['x-total-count']
-//   });
-//   console.log(res.data);
-// })
-// .then(() => {
-//   const numberOfPages = Math.ceil(this.state.resultsCount / 10);
-//   this.setState({ pageCount: numberOfPages });
-// })
-// .catch(error => {
-//   console.error('Error', error);
-// });
