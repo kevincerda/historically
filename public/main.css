@@ -51,7 +51,9 @@ input {
 .column-3 {
   display: grid;
   grid-template-columns: auto 1200px auto;
-  grid-template-areas: '. results .';
+  grid-template-areas:
+    '. results .'
+    '. pagination .';
   align-self: center;
 }
 
@@ -74,6 +76,7 @@ input {
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 2;
 }
 
 .nav-results {
@@ -207,3 +210,20 @@ li {
 /////// PAGINATE STYLES ////////
 ********************************
 */
+
+.active {
+  color: #4285f4;
+  font-weight: 500;
+  opacity: 1 !important;
+}
+
+.pagination {
+  grid-area: pagination;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.pagination li {
+  padding: 15px;
+  opacity: 0.5;
+}
