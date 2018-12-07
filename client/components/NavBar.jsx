@@ -8,7 +8,13 @@ const NavBar = props => {
         Historically
       </div>
       <div className="center-vertical-horizontal">
-        <Search updateData={props.updateData} />
+        <Search
+          updateData={props.updateData}
+          page={props.page}
+          resultsCount={props.resultsCount}
+          pageLinks={props.pageLinks}
+          pageCount={props.pageCount}
+        />
       </div>
     </nav>
   );
