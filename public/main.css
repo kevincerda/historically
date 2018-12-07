@@ -1,6 +1,206 @@
+/*
+********************************
+///////// Font Imports  ////////
+********************************
+*/
+
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display:900');
+
+/*
+********************************
+////// Resets & Defaults  //////
+********************************
+*/
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
 
 body {
+  color: #3e3e3e;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
+  margin: 0;
+  background-color: #fff;
 }
+
+input {
+  background-color: transparent;
+  border-style: none;
+}
+
+/*
+********************************
+///////// Grid Views  /////////
+********************************
+*/
+
+.navbar {
+  display: grid;
+  grid-template-columns: auto 1200px auto;
+  align-self: center;
+}
+
+.column-3 {
+  display: grid;
+  grid-template-columns: auto 1200px auto;
+  grid-template-areas: '. results .';
+  align-self: center;
+}
+
+.results-item-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-column-gap: 100px;
+  grid-template-areas:
+    'location description'
+    'line line';
+}
+
+/*
+********************************
+//////// NavBar Classes ////////
+********************************
+*/
+
+.nav-sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.nav-results {
+  color: #fff;
+  height: 80px;
+  background-color: #4181ed;
+}
+
+/*
+********************************
+/////// SearchBar Styles ///////
+********************************
+*/
+
+#header-search {
+  color: #fff;
+  font-size: 1.5rem;
+  height: 50px;
+  width: 1000px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/*
+********************************
+//////// Layout Classes ////////
+********************************
+*/
+
+.center-vertical-horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#main-wrapper {
+  height: 100vh;
+}
+
+#home-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #4285f4;
+}
+
+::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+input:focus {
+  outline: none !important;
+}
+
+.active {
+}
+
+li {
+  list-style-type: none;
+  display: inline;
+}
+
+/*
+********************************
+//////// RESULT ITEMS  ////////
+********************************
+*/
+
+.results {
+  grid-area: results;
+  margin-top: 80px;
+}
+
+.line-divider {
+  height: 1px;
+  display: block;
+  background-color: #000;
+  opacity: 0.1;
+  grid-area: line;
+}
+
+.results-item {
+  padding: 2rem 0;
+}
+
+#results-left-col {
+  text-align: right;
+  align-self: center;
+}
+
+#results-right-col {
+  text-align: left;
+  align-self: center;
+}
+
+#location,
+#date,
+#description,
+#granularity,
+#language {
+  display: inline-block;
+}
+
+#location {
+  font-size: 4rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  grid-area: location;
+  display: block;
+}
+
+#description {
+  grid-area: description;
+}
+
+#date {
+  font-size: 1rem;
+  opacity: 0.3;
+}
+
+#description {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+/*
+********************************
+/////// PAGINATE STYLES ////////
+********************************
+*/
