@@ -3,8 +3,8 @@ import React from 'react';
 const ResultsItem = props => {
   let resultItems = props.data.map((item, index) => {
     return (
-      <div>
-        <div className="results-item results-item-wrapper" key={index}>
+      <div key={index}>
+        <div className="results-item results-item-wrapper">
           <div id="results-left-col">
             <div id="location">{item.category2}</div>
             <div id="date">({item.date})</div>
@@ -17,11 +17,7 @@ const ResultsItem = props => {
       </div>
     );
   });
-  return (
-    <div className="column-3">
-      <div className="results">{resultItems}</div>
-    </div>
-  );
+  return <div className="results">{resultItems}</div>;
 };
 
 export default ResultsItem;
