@@ -2,19 +2,22 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 import ResultsItem from './ResultsItem.jsx';
+import parse from 'parse-link-header';
 
 export default class Search extends Component {
   constructor() {
     super();
     this.state = {
       searchQueryValue: '',
-      pageLimit: 10,
-      pageCount: null,
-      pageRangeDisplayed: null,
-      marginPagesDisplayed: null
+      page: 1,
+      data: undefined,
+      resultsCount: undefined,
+      pageLinks: undefined,
+      pageCount: undefined
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   handleChange(e) {
@@ -22,25 +25,34 @@ export default class Search extends Component {
   }
 
   handleSubmit(e) {
-    event.preventDefault();
+    e.preventDefault();
     axios
-      .get(
-        `/events?_page&q=${this.state.searchQueryValue}&_page=${
-          this.state.pageLimit
-        }`
-      )
+      .get(`/events?q=${this.state.searchQueryValue}&_page=${this.state.page}`)
       .then(res => {
         this.setState({
           data: res.data,
-          resultsCount: res.headers['x-total-count'],
-          pageLinks: res.headers.link.split(',')
+          resultsCount: res.headers['x-total-count']
         });
       })
       .then(() => {
-        this.setState({ pageCount: this.state.pageLinks.length });
+        const numberOfPages = Math.ceil(this.state.resultsCount / 10);
+        this.setState({ pageCount: numberOfPages });
       })
       .catch(error => {
         console.error('Error', error);
+      });
+  }
+
+  handlePageClick(data) {
+    let page = data.selected + 1;
+    this.setState({ page: page });
+    axios
+      .get(`/events?q=${this.state.searchQueryValue}&_page=${this.state.page}`)
+      .then(res => {
+        this.setState({ data: res.data });
+      })
+      .catch(error => {
+        console.log('Error', error);
       });
   }
 
@@ -64,6 +76,21 @@ export default class Search extends Component {
                 return <ResultsItem item={item} key={index} />;
               })
             : null}
+          {this.state.pageCount ? (
+            <ReactPaginate
+              previousLabel={'<'}
+              nextLabel={'>'}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={this.state.pageCount}
+              marginPagesDisplayed={4}
+              pageRangeDisplayed={10}
+              onPageChange={this.handlePageClick}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+            />
+          ) : null}
         </div>
       </div>
     );
