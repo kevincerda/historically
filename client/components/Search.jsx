@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ReactPaginate from 'react-paginate';
-import ResultsItem from './ResultsItem.jsx';
 
 export default class Search extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      searchQueryValue: [],
+      searchQueryValue: '',
       page: 1,
-      data: undefined,
       resultsCount: undefined,
       pageLinks: undefined,
       pageCount: undefined
@@ -17,6 +14,7 @@ export default class Search extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
+    this.updateData = this.props.updateData.bind(this);
   }
 
   handleChange(e) {
@@ -28,17 +26,7 @@ export default class Search extends Component {
     axios
       .get(`/events?q=${this.state.searchQueryValue}&_page=${this.state.page}`)
       .then(res => {
-        this.setState({
-          data: res.data,
-          resultsCount: res.headers['x-total-count']
-        });
-      })
-      .then(() => {
-        const numberOfPages = Math.ceil(this.state.resultsCount / 10);
-        this.setState({ pageCount: numberOfPages });
-      })
-      .catch(error => {
-        console.error('Error', error);
+        this.updateData(res.data);
       });
   }
 
@@ -57,37 +45,32 @@ export default class Search extends Component {
 
   render() {
     return (
-      <div>
-        <div id="search-form">
-          <form>
-            <label>Search</label>
-            <input
-              type="text"
-              value={this.state.searchQueryValue}
-              onChange={this.handleChange}
-            />
-            <button onClick={this.handleSubmit}>Submit</button>
-          </form>
-        </div>
-        <div id="results">
-          {this.state.data ? <ResultsItem data={this.state.data} /> : null}
-          {this.state.pageCount ? (
-            <ReactPaginate
-              previousLabel={'<'}
-              nextLabel={'>'}
-              breakLabel={'...'}
-              breakClassName={'break-me'}
-              pageCount={this.state.pageCount}
-              marginPagesDisplayed={4}
-              pageRangeDisplayed={10}
-              onPageChange={this.handlePageClick}
-              containerClassName={'pagination'}
-              subContainerClassName={'pages pagination'}
-              activeClassName={'active'}
-            />
-          ) : null}
-        </div>
+      <div id="search-bar">
+        <form>
+          <input
+            type="text"
+            value={this.state.searchQueryValue}
+            onChange={this.handleChange}
+            placeholder="What are you searching for?"
+            id={'header-search'}
+          />
+          <button onClick={this.handleSubmit}>Submit</button>
+        </form>
       </div>
     );
   }
 }
+
+// .then(res => {
+//   this.setState({
+//     resultsCount: res.headers['x-total-count']
+//   });
+//   console.log(res.data);
+// })
+// .then(() => {
+//   const numberOfPages = Math.ceil(this.state.resultsCount / 10);
+//   this.setState({ pageCount: numberOfPages });
+// })
+// .catch(error => {
+//   console.error('Error', error);
+// });
