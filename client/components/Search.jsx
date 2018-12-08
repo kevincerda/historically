@@ -39,6 +39,10 @@ export default class Search extends Component {
           pageCount: this.state.pageCount
         });
       })
+      .then(() => {
+        const navbar = document.getElementById('nav');
+        navbar.style.height = '80px';
+      })
       .catch(error => {
         console.error('Error', error);
       });
