@@ -26,6 +26,9 @@ export default class Paginate extends Component {
           searchResults: res.data
         });
       })
+      .then(() => {
+        window.scrollTo(0, 0);
+      })
       .catch(error => {
         console.log('Error', error);
       });
