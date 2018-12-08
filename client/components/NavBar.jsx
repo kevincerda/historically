@@ -3,7 +3,7 @@ import Search from './Search.jsx';
 
 const NavBar = props => {
   return (
-    <nav className="navbar nav-results nav-sticky">
+    <nav className="navbar nav-results nav-sticky" id="nav">
       <div className="center-vertical-horizontal" id="logo">
         Historically
       </div>
