@@ -6,6 +6,7 @@
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display:900');
+@import url('https://fonts.googleapis.com/css?family=Raleway:700');
 
 /*
 ********************************
@@ -34,6 +35,28 @@ body {
 input {
   background-color: transparent;
   border-style: none;
+}
+
+button {
+  color: #fff;
+  background-color: transparent;
+  border-width: none;
+  border-style: none;
+  border-color: none;
+  border-image: none;
+}
+
+li {
+  list-style-type: none;
+  display: inline;
+}
+
+::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+input:focus {
+  outline: none !important;
 }
 
 /*
@@ -103,6 +126,13 @@ input {
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
+#logo {
+  font-size: 2rem;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  transition: transform 0.5s linear;
+}
+
 /*
 ********************************
 //////// Layout Classes ////////
@@ -126,22 +156,6 @@ input {
   align-items: center;
   flex-direction: column;
   background-color: #4285f4;
-}
-
-::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-input:focus {
-  outline: none !important;
-}
-
-.active {
-}
-
-li {
-  list-style-type: none;
-  display: inline;
 }
 
 /*
