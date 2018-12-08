@@ -41,7 +41,9 @@ export default class Search extends Component {
       })
       .then(() => {
         const navbar = document.getElementById('nav');
+        const logo = document.getElementById('logo');
         navbar.style.height = '80px';
+        logo.style.fontSize = '1.5rem';
       })
       .catch(error => {
         console.error('Error', error);
@@ -59,7 +61,9 @@ export default class Search extends Component {
             placeholder="What are you searching for?"
             id={'header-search'}
           />
-          <button onClick={this.handleSubmit}>Submit</button>
+          <button onClick={this.handleSubmit}>
+            <i className="fas fa-search" />
+          </button>
         </form>
       </div>
     );
